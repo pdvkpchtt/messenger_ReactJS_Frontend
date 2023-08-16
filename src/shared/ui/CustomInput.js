@@ -1,4 +1,5 @@
 import { CircularProgressbar } from "react-circular-progressbar";
+import TextError from "../Text/TextError";
 
 import TextHead from "../Text/TextHead";
 
@@ -8,6 +9,8 @@ const CustomInput = ({
   placeholder = "empty",
   password = false,
   head = "",
+  textError = "empty",
+  invalid = false,
   maxLength,
 }) => {
   return (
@@ -38,6 +41,13 @@ const CustomInput = ({
         type={password && "password"}
         maxLength={maxLength}
       />
+
+      {invalid ? (
+        <TextError
+          additionStyle={{ marginTop: 4, marginLeft: 4 }}
+          text={textError}
+        />
+      ) : null}
     </div>
   );
 };
