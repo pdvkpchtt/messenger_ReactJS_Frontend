@@ -1,11 +1,15 @@
 import NavHandler from "./components/NavHandler";
 import Layout from "./shared/Layout";
 
+import UserContext from "./components/AccountContext";
+
 function App() {
   return (
-    <Layout>
-      <NavHandler />
-    </Layout>
+    <UserContext>
+      <Layout>
+        <NavHandler />
+      </Layout>
+    </UserContext>
   );
 }
 

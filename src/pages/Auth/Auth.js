@@ -1,15 +1,21 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { LayoutGroup, motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 import TextHead from "../../shared/Text/TextHead";
 import CustomButton from "../../shared/ui/CustomButton";
 import CustomInput from "../../shared/ui/CustomInput";
 import TextError from "../../shared/Text/TextError";
+import { AccountContext } from "../../components/AccountContext";
 
 const Auth = () => {
+  const { setUser } = useContext(AccountContext);
+
   const [loginState, setLoginState] = useState("");
   const [passwordState, setPasswordState] = useState("");
   const [invalid, setInvalid] = useState(false);
+
+  const navigate = useNavigate();
 
   return (
     <AnimatePresence>
@@ -71,7 +77,8 @@ const Auth = () => {
                 })
                 .then((data) => {
                   if (!data) return;
-                  console.log(data);
+                  setUser({ ...data });
+                  navigate("/home");
                 });
             }}
           />
@@ -101,7 +108,10 @@ const Auth = () => {
                 })
                 .then((data) => {
                   if (!data) return;
-                  console.log(data);
+                  console.log(data); // data from server
+                  setUser({ ...data });
+
+                  navigate("/home");
                 });
             }}
           />
