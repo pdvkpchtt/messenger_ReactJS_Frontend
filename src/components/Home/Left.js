@@ -1,12 +1,15 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 import { FriendContext } from "../../pages/Home/Home";
 import FriendIcon from "../../shared/Icons/FriendIcon";
 import TextHead from "../../shared/Text/TextHead";
+import AddFriendModal from "./AddFriendModal";
 import ChatCard from "./ChatCard";
 
 const Left = () => {
   const { friendState, setFriendState } = useContext(FriendContext);
+
+  const [modal, setModal] = useState(false);
 
   return (
     <>
@@ -16,7 +19,7 @@ const Left = () => {
           additionStyle={{ fontSize: 20, fontWeight: "medium" }}
         />
 
-        <FriendIcon />
+        <FriendIcon onPress={() => setModal(true)} />
       </div>
       <div className="overflow-y-scroll rounded-bl-[35px] h-[calc(100vh-174px)] flex flex-col">
         {friendState.length === 0 ? (
@@ -33,6 +36,13 @@ const Left = () => {
           ))
         )}
       </div>
+
+      <AddFriendModal
+        handleClose={() => {
+          setModal(false);
+        }}
+        isOpen={modal}
+      />
     </>
   );
 };
