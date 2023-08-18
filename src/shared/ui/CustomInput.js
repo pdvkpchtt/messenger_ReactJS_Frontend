@@ -38,7 +38,7 @@ const CustomInput = ({
         className="outline-none bg-[#141414] placeholder:text-[#929292] text-[#fff] p-[8px] rounded-[8px] transition duration-[300ms] hover:inner-border-[1px] hover:inner-border-[#604ae6] focus-within:inner-border-[#604ae6] focus-within:inner-border-[1px]"
         value={value}
         placeholder={placeholder}
-        type={password && "password"}
+        type={password ? "password" : "text"}
         maxLength={maxLength}
       />
 

@@ -13,7 +13,7 @@ const Auth = () => {
 
   const [loginState, setLoginState] = useState("");
   const [passwordState, setPasswordState] = useState("");
-  const [invalid, setInvalid] = useState(false);
+  const [invalid, setInvalid] = useState(null);
 
   const navigate = useNavigate();
 
@@ -42,13 +42,13 @@ const Auth = () => {
             password
             maxLength={10}
           />
-          {invalid ? (
+          {invalid != null ? (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              <TextError text="Invalid login or password" />
+              <TextError text={invalid} />
             </motion.div>
           ) : null}
 
@@ -78,7 +78,8 @@ const Auth = () => {
                 .then((data) => {
                   if (!data) return;
                   setUser({ ...data });
-                  navigate("/home");
+                  if (data.status) setInvalid(data.status);
+                  else if (data.loggedIn) navigate("/home");
                 });
             }}
           />
@@ -108,10 +109,9 @@ const Auth = () => {
                 })
                 .then((data) => {
                   if (!data) return;
-                  console.log(data); // data from server
                   setUser({ ...data });
-
-                  navigate("/home");
+                  if (data.status) setInvalid(data.status);
+                  else if (data.loggedIn) navigate("/home");
                 });
             }}
           />
