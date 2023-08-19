@@ -46,7 +46,10 @@ const Home = () => {
             </div>
             <div className="p-[16px] w-full">
               <MessagesContext.Provider value={{ messages, setMessages }}>
-                <Right userId={friendState[friendIndex]?.userid} />
+                <Right
+                  userId={friendState[friendIndex]?.userid}
+                  name={friendState[friendIndex]?.username}
+                />
               </MessagesContext.Provider>
             </div>
           </motion.div>

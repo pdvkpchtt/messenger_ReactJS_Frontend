@@ -9,7 +9,7 @@ const SendIcon = ({ onPress = () => {}, inactive = false }) => {
       viewBox="0 0 24 24"
       whileTap={{ scale: 0.9 }}
       onTap={onPress}
-      className={`rounded-[99px] p-[5px] cursor-pointer transition duration-[250ms] ${
+      className={`rounded-[99px] w-fit h-fit p-[5px] cursor-pointer transition duration-[250ms] ${
         inactive ? "bg-gray-600" : "bg-[#604ae6] hover:bg-[#7A67EF]"
       }`}
     >

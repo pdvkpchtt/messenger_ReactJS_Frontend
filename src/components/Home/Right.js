@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from "framer-motion";
 import { useContext, useEffect, useRef } from "react";
 
 import { FriendContext, MessagesContext } from "../../pages/Home/Home";
@@ -5,7 +6,7 @@ import TextHead from "../../shared/Text/TextHead";
 import ChatBox from "./ChatBox";
 import Message from "./Message";
 
-const Right = ({ userId }) => {
+const Right = ({ userId, name }) => {
   useEffect(() => {
     bottomDiv.current?.scrollIntoView();
   });
@@ -24,18 +25,26 @@ const Right = ({ userId }) => {
   ) : (
     <div className="flex flex-col h-full justify-end">
       <div className="overflow-y-scroll mb-[16px] w-full h-[calc(100vh-193px)] items-end">
-        {friendState.map((item, index) => (
-          <div key={index}>
-            {messages
-              .filter(
-                (msg) => msg.to === item.userid || msg.from === item.userid
-              )
-              .reverse()
-              .map((message, index) => (
-                <Message key={index} item={message} friend={item} />
-              ))}
-          </div>
-        ))}
+        <AnimatePresence>
+          {friendState.map((item, index) => (
+            <div key={index}>
+              {name === item.username &&
+                messages
+                  .filter(
+                    (msg) => msg.to === item.userid || msg.from === item.userid
+                  )
+                  .reverse()
+                  .map((message, index) => (
+                    <Message
+                      key={index}
+                      item={message}
+                      friend={item}
+                      userId={userId}
+                    />
+                  ))}
+            </div>
+          ))}
+        </AnimatePresence>
         <div ref={bottomDiv} />
       </div>
       <ChatBox userId={userId} />
