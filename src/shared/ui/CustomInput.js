@@ -1,6 +1,6 @@
 import { CircularProgressbar } from "react-circular-progressbar";
-import TextError from "../Text/TextError";
 
+import TextError from "../Text/TextError";
 import TextHead from "../Text/TextHead";
 
 const CustomInput = ({

@@ -4,10 +4,8 @@ import { useNavigate } from "react-router";
 export const AccountContext = createContext();
 
 const UserContext = ({ children }) => {
-  const navigate = useNavigate();
-
   const [user, setUser] = useState({ loggedIn: null });
-
+  const navigate = useNavigate();
   useEffect(() => {
     fetch("http://localhost:4000/auth/login", {
       credentials: "include",
@@ -25,17 +23,14 @@ const UserContext = ({ children }) => {
       })
       .then((data) => {
         if (!data) {
-          console.log("not logged in");
           setUser({ loggedIn: false });
           return;
         }
-        console.log("logged in");
         setUser({ ...data });
         navigate("/home");
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   return (
     <AccountContext.Provider value={{ user, setUser }}>
       {children}

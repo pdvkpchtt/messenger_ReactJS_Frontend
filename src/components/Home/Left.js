@@ -6,8 +6,8 @@ import TextHead from "../../shared/Text/TextHead";
 import AddFriendModal from "./AddFriendModal";
 import ChatCard from "./ChatCard";
 
-const Left = () => {
-  const { friendState, setFriendState } = useContext(FriendContext);
+const Left = ({ setIndex = () => {} }) => {
+  const { friendState } = useContext(FriendContext);
 
   const [modal, setModal] = useState(false);
 
@@ -29,9 +29,10 @@ const Left = () => {
         ) : (
           friendState.map((item, index) => (
             <ChatCard
-              item={item}
               key={index}
+              item={item}
               divider={index !== friendState.length - 1}
+              onPress={() => setIndex(index)}
             />
           ))
         )}

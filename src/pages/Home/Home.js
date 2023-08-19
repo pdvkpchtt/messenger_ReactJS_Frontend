@@ -7,16 +7,16 @@ import Right from "../../components/Home/Right";
 import useSocketSetup from "../../socket/useSocketSetup";
 
 export const FriendContext = createContext();
+export const MessagesContext = createContext();
 
 const Home = () => {
   const isMobile = useMediaQuery({ query: "(pointer:coarse)" });
 
-  const [friendState, setFriendState] = useState([
-    { username: "Loong naaaaaamsase", connected: false },
-    { username: "Danil", connected: true },
-  ]);
+  const [friendState, setFriendState] = useState([]);
+  const [messages, setMessages] = useState([]);
+  const [friendIndex, setFriendIndex] = useState(0);
 
-  useSocketSetup();
+  useSocketSetup(setFriendState, setMessages);
 
   return (
     <FriendContext.Provider value={{ friendState, setFriendState }}>
@@ -42,10 +42,12 @@ const Home = () => {
             className="flex flex-row bg-[#222222] rounded-[35px] w-full"
           >
             <div className="max-w-[250px] w-full border-r-[1px] border-[#2c2c2c]">
-              <Left />
+              <Left setIndex={(v) => setFriendIndex(v)} />
             </div>
             <div className="p-[16px] w-full">
-              <Right />
+              <MessagesContext.Provider value={{ messages, setMessages }}>
+                <Right userId={friendState[friendIndex]?.userid} />
+              </MessagesContext.Provider>
             </div>
           </motion.div>
         )}

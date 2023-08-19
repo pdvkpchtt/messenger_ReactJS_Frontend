@@ -1,10 +1,11 @@
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import socket from "../../socket/socket";
 import CrossIcon from "../../shared/Icons/CrossIcon";
 import CustomButton from "../../shared/ui/CustomButton";
 import CustomInput from "../../shared/ui/CustomInput";
+import { FriendContext } from "../../pages/Home/Home";
 
 const modalVariant = {
   initial: { opacity: 0 },
@@ -19,6 +20,8 @@ const containerVariant = {
 const AddFriendModal = ({ handleClose = () => {}, isOpen = false }) => {
   const [friendName, setFriendName] = useState("");
   const [invalid, setInvalid] = useState(null);
+
+  const { friendState, setFriendState } = useContext(FriendContext);
 
   return (
     <AnimatePresence>
@@ -62,19 +65,25 @@ const AddFriendModal = ({ handleClose = () => {}, isOpen = false }) => {
                     if (!friendName.length > 0)
                       setInvalid("This field must be filled");
 
-                    socket.emit(
-                      "add_friend",
-                      friendName,
-                      ({ errorMsg, done }) => {
-                        if (done) {
-                          handleClose();
-                          setInvalid(null);
-                          setFriendName("");
-                          return;
+                    if (
+                      friendState.filter((item) => item.username === friendName)
+                        .length === 0
+                    ) {
+                      socket.emit(
+                        "add_friend",
+                        friendName,
+                        ({ errorMsg, done, newFriend }) => {
+                          if (done) {
+                            setFriendState((c) => [newFriend, ...c]);
+                            handleClose();
+                            setInvalid(null);
+                            setFriendName("");
+                            return;
+                          }
+                          setInvalid(errorMsg);
                         }
-                        setInvalid(errorMsg);
-                      }
-                    );
+                      );
+                    } else setInvalid("User is already in your friends list");
                   }}
                 />
               </div>
