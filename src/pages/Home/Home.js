@@ -4,6 +4,7 @@ import { useMediaQuery } from "react-responsive";
 
 import Left from "../../components/Home/Left";
 import Right from "../../components/Home/Right";
+import useSocketSetup from "../../socket/useSocketSetup";
 
 export const FriendContext = createContext();
 
@@ -14,6 +15,8 @@ const Home = () => {
     { username: "Loong naaaaaamsase", connected: false },
     { username: "Danil", connected: true },
   ]);
+
+  useSocketSetup();
 
   return (
     <FriendContext.Provider value={{ friendState, setFriendState }}>

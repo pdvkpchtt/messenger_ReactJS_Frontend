@@ -35,7 +35,9 @@ const CustomInput = ({
 
       <input
         onChange={(e) => onChange(e.target.value)}
-        className="outline-none bg-[#141414] placeholder:text-[#929292] text-[#fff] p-[8px] rounded-[8px] transition duration-[300ms] hover:inner-border-[1px] hover:inner-border-[#604ae6] focus-within:inner-border-[#604ae6] focus-within:inner-border-[1px]"
+        className={`outline-none ${
+          invalid ? "bg-[rgba(255,59,48,0.20)]" : "bg-[#141414]"
+        } placeholder:text-[#929292] text-[#fff] p-[8px] rounded-[8px] transition duration-[300ms] hover:inner-border-[1px] hover:inner-border-[#604ae6] focus-within:inner-border-[#604ae6] focus-within:inner-border-[1px]`}
         value={value}
         placeholder={placeholder}
         type={password ? "password" : "text"}
@@ -44,7 +46,7 @@ const CustomInput = ({
 
       {invalid ? (
         <TextError
-          additionStyle={{ marginTop: 4, marginLeft: 4 }}
+          additionStyle={{ marginTop: 4, marginLeft: 4, fontSize: 12 }}
           text={textError}
         />
       ) : null}
