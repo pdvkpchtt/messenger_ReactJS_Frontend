@@ -26,24 +26,23 @@ const Right = ({ userId, name }) => {
     <div className="flex flex-col h-full justify-end">
       <div className="overflow-y-scroll mb-[16px] w-full h-[calc(100vh-193px)] items-end">
         <AnimatePresence>
-          {friendState.map((item, index) => (
-            <div key={index}>
-              {name === item.username &&
-                messages
-                  .filter(
-                    (msg) => msg.to === item.userid || msg.from === item.userid
-                  )
-                  .reverse()
-                  .map((message, index) => (
-                    <Message
-                      key={index}
-                      item={message}
-                      friend={item}
-                      userId={userId}
-                    />
-                  ))}
-            </div>
-          ))}
+          {friendState.map(
+            (item) =>
+              name === item.username &&
+              messages
+                .filter(
+                  (msg) => msg.to === item.userid || msg.from === item.userid
+                )
+                .reverse()
+                .map((message, index) => (
+                  <Message
+                    key={index}
+                    item={message}
+                    friend={item}
+                    userId={userId}
+                  />
+                ))
+          )}
         </AnimatePresence>
         <div ref={bottomDiv} />
       </div>
